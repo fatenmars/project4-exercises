@@ -9,6 +9,7 @@ import { Session } from '../../../../core/models/session.interface';
 import { SessionApiService } from '../../../../core/service/session-api.service';
 import { MaterialModule } from '../../../../shared/material.module';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-detail',
@@ -43,7 +44,7 @@ export class DetailComponent implements OnInit {
     this.fetchSession();
   }
 
-  public back() {
+  public back(): void {
     window.history.back();
   }
 
@@ -51,7 +52,7 @@ export class DetailComponent implements OnInit {
     this.sessionApiService
       .delete(this.sessionId)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((_: any) => {
+      .subscribe((_: void) => {
         this.matSnackBar.open('Session deleted !', 'Close', { duration: 3000 });
         this.router.navigate(['sessions']);
       });
@@ -61,14 +62,14 @@ export class DetailComponent implements OnInit {
     this.sessionApiService
       .participate(this.sessionId, this.userId)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((_) => this.fetchSession());
+      .subscribe((_: void) => this.fetchSession());
   }
 
   public unParticipate(): void {
     this.sessionApiService
       .unParticipate(this.sessionId, this.userId)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((_) => this.fetchSession());
+      .subscribe((_: void) => this.fetchSession());
   }
 
   private fetchSession(): void {
