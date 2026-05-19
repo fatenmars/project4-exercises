@@ -19,4 +19,16 @@ public class UserService {
     public User findById(Long id) {
         return this.userRepository.findById(id).orElse(null);
     }
+
+    public User findByEmail(String email) {
+        return this.userRepository.findByEmail(email).orElse(null);
+    }
+
+    public boolean existsByEmail(String email) {
+        return this.userRepository.existsByEmail(email);
+    }
+
+    public User save(User user) {
+        return this.userRepository.save(user);
+    }
 }
