@@ -1,6 +1,5 @@
 package com.openclassrooms.starterjwt.controllers;
 
-
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.payload.request.LoginRequest;
 import com.openclassrooms.starterjwt.payload.request.SignupRequest;
@@ -30,9 +29,9 @@ public class AuthController {
     private final UserRepository userRepository;
 
     public AuthController(AuthenticationManager authenticationManager,
-                   PasswordEncoder passwordEncoder,
-                   JwtUtils jwtUtils,
-                   UserRepository userRepository) {
+            PasswordEncoder passwordEncoder,
+            JwtUtils jwtUtils,
+            UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.passwordEncoder = passwordEncoder;
