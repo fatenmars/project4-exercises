@@ -26,4 +26,46 @@ describe('AuthService', () => {
   it('devrait être créé', () => {
     expect(service).toBeTruthy();
   });
+
+  it('devrait enregistrer un utilisateur', () => {
+    const mockRegisterRequest = {
+      email: 'test@test.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      password: 'password123',
+    };
+
+    service.register(mockRegisterRequest).subscribe();
+
+    const req = httpMock.expectOne('/api/auth/register');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(mockRegisterRequest);
+    req.flush(null);
+  });
+
+  it('devrait connecter un utilisateur', () => {
+    const mockLoginRequest = {
+      email: 'test@test.com',
+      password: 'password123',
+    };
+
+    const mockResponse = {
+      token: 'fake-token',
+      type: 'Bearer',
+      id: 1,
+      username: 'test@test.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      admin: false,
+    };
+
+    service.login(mockLoginRequest).subscribe((response) => {
+      expect(response).toEqual(mockResponse);
+    });
+
+    const req = httpMock.expectOne('/api/auth/login');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(mockLoginRequest);
+    req.flush(mockResponse);
+  });
 });
