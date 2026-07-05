@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">yoga-app</a> &gt; <a href="index.source.html" class="el_package">com.openclassrooms.starterjwt.services</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package com.openclassrooms.starterjwt.services;
+
+import com.openclassrooms.starterjwt.models.User;
+import com.openclassrooms.starterjwt.payload.request.SignupRequest;
+import com.openclassrooms.starterjwt.repository.UserRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.Objects;
+
+@Service
+public class UserService {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+<span class="fc" id="L17">    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {</span>
+<span class="fc" id="L18">        this.userRepository = userRepository;</span>
+<span class="fc" id="L19">        this.passwordEncoder = passwordEncoder;</span>
+<span class="fc" id="L20">    }</span>
+
+    public void delete(Long id) {
+<span class="fc" id="L23">        this.userRepository.deleteById(id);</span>
+<span class="fc" id="L24">    }</span>
+
+    public User findById(Long id) {
+<span class="fc" id="L27">        return this.userRepository.findById(id).orElse(null);</span>
+    }
+
+    public User findByEmail(String email) {
+<span class="fc" id="L31">        return this.userRepository.findByEmail(email).orElse(null);</span>
+    }
+
+    public boolean existsByEmail(String email) {
+<span class="fc" id="L35">        return this.userRepository.existsByEmail(email);</span>
+    }
+
+    public User save(User user) {
+<span class="fc" id="L39">        return this.userRepository.save(user);</span>
+    }
+
+    public User register(SignupRequest signUpRequest) {
+<span class="fc" id="L43">        User user = new User(signUpRequest.getEmail(),</span>
+<span class="fc" id="L44">                signUpRequest.getLastName(),</span>
+<span class="fc" id="L45">                signUpRequest.getFirstName(),</span>
+<span class="fc" id="L46">                passwordEncoder.encode(signUpRequest.getPassword()),</span>
+<span class="fc" id="L47">                false);</span>
+<span class="fc" id="L48">        return this.userRepository.save(user);</span>
+    }
+
+    public Boolean isOwner(User user) {
+<span class="fc" id="L52">        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()</span>
+<span class="fc" id="L53">                .getPrincipal();</span>
+<span class="fc" id="L54">        return Objects.equals(userDetails.getUsername(), user.getEmail());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

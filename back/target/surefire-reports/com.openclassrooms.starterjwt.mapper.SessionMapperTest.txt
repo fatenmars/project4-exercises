@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.openclassrooms.starterjwt.mapper.SessionMapperTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.246 s -- in com.openclassrooms.starterjwt.mapper.SessionMapperTest

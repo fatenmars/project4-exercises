@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.openclassrooms.starterjwt.controllers.TeacherControllerTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.542 s -- in com.openclassrooms.starterjwt.controllers.TeacherControllerTest
